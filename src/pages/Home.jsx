@@ -1,7 +1,9 @@
+import BarraNavegacion from "../components/BarraNavegacion"
 
 const Home = () => {
     return (
         <>
+        <BarraNavegacion/>
         <p>Elementos de la paguina de inicio</p>
         <ul>
             <li>Barra de navegacion</li>
