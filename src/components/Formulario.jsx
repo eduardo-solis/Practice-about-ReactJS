@@ -45,7 +45,7 @@ const Formulario = () => {
                             <div className="col">
                                 <div className="form-floating">
                                     <input type="url" className="form-control" id="twitter" placeholder="Twitter" />
-                                    <label htmlFor="twitter">Twitter</label>
+                                    <label htmlFor="twitter">Link de tu perfil de Twitter</label>
                                 </div>
                             </div>
                         </div>
