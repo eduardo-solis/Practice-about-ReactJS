@@ -38,7 +38,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="col-md-6 d-grid">
-                    <button onClick={ () => navigation("/participantes/registrar") } className="btn btn-outline-primary btn-lg" >Registrate ahora!</button>
+                    <button onClick={ () => navigation("/participantes") } className="btn btn-outline-primary btn-lg" >Registrate ahora!</button>
                 </div>
             </div>
         </div>

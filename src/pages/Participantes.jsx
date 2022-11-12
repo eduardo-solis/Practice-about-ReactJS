@@ -1,12 +1,12 @@
 import BarraNavegacion from "../components/BarraNavegacion"
 
-const RegistroPraticipante = () => {
+const Participantes = () => {
     return (
         <>
         <BarraNavegacion/>
-        
+        <div>Participantes</div>
         </>
     )
 }
 
-export default RegistroPraticipante
+export default Participantes
