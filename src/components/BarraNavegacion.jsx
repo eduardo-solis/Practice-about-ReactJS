@@ -30,6 +30,9 @@ const BarraNavegacion = () => {
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" onClick={ () => navigation("/participantes")}>Participantes</a>
                             </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" onClick={ () => navigation("/participantes/registrar")}>Registro</a>
+                            </li>
                         </ul>
                     </div>
 

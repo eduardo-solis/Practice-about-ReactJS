@@ -1,10 +1,11 @@
 import BarraNavegacion from "../components/BarraNavegacion"
+import Formulario from "../components/Formulario"
 
 const EditarParticipante = () => {
     return (
         <>
-        <BarraNavegacion/>
-        <div>EditarParticipante</div>
+            <BarraNavegacion />
+            <Formulario/>
         </>
     )
 }

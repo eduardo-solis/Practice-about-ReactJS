@@ -10,8 +10,8 @@ const App = () => {
     <Routes>
       <Route path='/' element={ <Home/> } />
       <Route path='/participantes' element={ <Participantes/> } />
-      <Route path='/participantes/registrar' element={ <RegistroParticipante/> } />
-      <Route path='/participantes/editar' element={ <EditarParticipante/> } />
+      <Route path='/participantes/registrar' element={ <EditarParticipante/> } />
+      <Route path='/participantes/editar' element={ <RegistroParticipante/> } />
       <Route path='*' element={ <h1>Error 404: Pagina no encontrada</h1> } />
     </Routes>
     </BrowserRouter>
