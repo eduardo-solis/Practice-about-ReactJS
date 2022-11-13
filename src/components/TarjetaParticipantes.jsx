@@ -15,11 +15,11 @@ const TarjetaParticipantes = () => {
 
     return (
         <>
-        <div className="card w-50" >
+        <div className="card" >
             <div className="card-body">
                 <div className="row">
                     <div className="col-md-3 justify">
-                        <img src={imagen} width='100' alt="Imagen avatar" />
+                        <img src={imagen} width='70' alt="Imagen avatar" />
                     </div>
                     <div className="col">
                         <h4>{nombre} {apellido}</h4>
