@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 
-import { GET_PARTICIPANTES, GET_PARTICIPANTE, ADD_PARTICIPANTE, MODIFY_PARTICIPANTE, DELETE_PARTICIPANTE } from "./types";
+import { GET_PARTICIPANTES, GET_PARTICIPANTE, CLEAN_PARTICIPANTE, ADD_PARTICIPANTE, MODIFY_PARTICIPANTE, DELETE_PARTICIPANTE } from "./types";
 
 import {ParticipanteReducer} from './ParticipanteReducer'
 import { ParticipanteContext } from './ParticipanteContext'
@@ -12,6 +12,7 @@ const ParticipanteProvider = ( { children } ) => {
 
     const initialState = {
         participantes: [],
+        participanteObtenido: null,
         cargando: true
     };
 
@@ -24,8 +25,6 @@ const ParticipanteProvider = ( { children } ) => {
         let auxData = [];
 
         const data = await getDocs(participantesCollection);
-
-        
 
         data.docs.map( ( doc ) => {
             auxData.push( { ...doc.data(), id: doc.id } );
@@ -55,6 +54,13 @@ const ParticipanteProvider = ( { children } ) => {
         }
     };
 
+    const limpiarParticipante = () => {
+        dispatch({
+            type: CLEAN_PARTICIPANTE,
+            payload: null
+        })
+    }
+
     const registrarParticipante = async ( Nombre, Apellido, Avatar, Email, Link, Ocupacion ) => {
 
         await addDoc(participantesCollection, {
@@ -72,7 +78,7 @@ const ParticipanteProvider = ( { children } ) => {
 
     const modificarParticipante = async ( Id, Nombre, Apellido, Avatar, Email, Link, Ocupacion ) => {
 
-        const participanteDoc = await getDoc( doc(db, "participantes", Id) );
+        const participanteDoc = doc(db, "participantes", Id);
 
         const data = {
             nombre: Nombre,
@@ -95,7 +101,8 @@ const ParticipanteProvider = ( { children } ) => {
             obtenerParticipantes,
             obtenerParticipantePorId,
             registrarParticipante,
-            modificarParticipante
+            modificarParticipante,
+            limpiarParticipante
         }}
         >
             {children}

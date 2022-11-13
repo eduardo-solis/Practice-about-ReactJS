@@ -4,15 +4,21 @@ import mujer from '../assets/mujer.png'
 import persona from '../assets/cuenta.png'
 
 import { ParticipanteContext } from '../context/ParticipanteContext'
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-const Formulario = () => {
+const Formulario = ({ nuevo = true }) => {
 
-    const { registrarParticipante } = useContext(ParticipanteContext);
+    const {
+        state: { participanteObtenido },
+        registrarParticipante,
+        modificarParticipante,
+        limpiarParticipante
+    } = useContext(ParticipanteContext);
 
     const navigation = useNavigate()
 
     const [formulario, setFormulario] = useState({
+        Id: "",
         Nombre: "",
         Apellido: "",
         Email: "",
@@ -21,7 +27,7 @@ const Formulario = () => {
         Ocupacion: ""
     });
 
-    const { Nombre, Apellido, Email, Avatar, Link, Ocupacion } = formulario;
+    const { Id, Nombre, Apellido, Email, Avatar, Link, Ocupacion } = formulario;
 
     const handleChange = (e) => {
         setFormulario(
@@ -33,29 +39,48 @@ const Formulario = () => {
     }
 
     const registrar = () => {
-        
+
         let cb = document.getElementById("terminos").checked;
 
         if (cb) {
             console.log(Nombre);
-            if(estaValidado()){
-                registrarParticipante(Nombre, Apellido, Email, Avatar, Link, Ocupacion)
+            if (estaValidado()) {
+                registrarParticipante(Nombre, Apellido, Avatar, Email, Link, Ocupacion)
                 limpiarFormulario()
                 navigation("/participantes")
             }
-            
+
         }
         else {
             alert("No aceptados");
         }
     }
 
+    const actualizar = () => {
+        if (estaValidado()) {
+            console.log(Id);
+            modificarParticipante(Id, Nombre, Apellido, Avatar, Email, Link, Ocupacion);
+            limpiarParticipante();
+            limpiarFormulario();
+            navigation("/participantes");
+        }
+        else{
+            alert("Algo ocurrio")
+        }
+    }
+
+    const cancelarActualizacion = () => {
+        limpiarParticipante();
+        navigation("/participantes");
+    }
+
     const limpiarFormulario = () => {
 
         let arRadioBtn = document.getElementsByName("Avatar");
-        
+
 
         setFormulario({
+            Id: "",
             Nombre: "",
             Apellido: "",
             Email: "",
@@ -74,27 +99,27 @@ const Formulario = () => {
 
     const estaValidado = () => {
 
-        if (Nombre == ""){
+        if (Nombre == "") {
             alert("El campo Nombre no puede estar vacio")
             return false
         }
-        if (Apellido == ""){
+        if (Apellido == "") {
             alert("El campo Apellido no puede estar vacio")
             return false
         }
-        if (Email == ""){
+        if (Email == "") {
             alert("El campo Email no puede estar vacio")
             return false
         }
-        if (Avatar == ""){
+        if (Avatar == "") {
             alert("Debe seleccionar un avatar")
             return false
         }
-        if (Link == ""){
+        if (Link == "") {
             alert("El campo Link de Twitter no puede estar vacio")
             return false
         }
-        if (Ocupacion == ""){
+        if (Ocupacion == "") {
             alert("El campo Ocupacion no puede estar vacio")
             return false
         }
@@ -103,12 +128,62 @@ const Formulario = () => {
 
     }
 
+    useEffect(() => {
+        if (participanteObtenido != null) {
+            let arRadioBtn = document.getElementsByName("Avatar");
+
+            setFormulario({
+                Id: participanteObtenido.id,
+                Nombre: participanteObtenido.nombre,
+                Apellido: participanteObtenido.apellido,
+                Email: participanteObtenido.email,
+                Avatar: participanteObtenido.avatar,
+                Link: participanteObtenido.link,
+                Ocupacion: participanteObtenido.ocupacion
+            })
+
+            for (let ii = 0; ii < arRadioBtn.length; ii++) {
+                let radButton = arRadioBtn[ii];
+                if (radButton.value == participanteObtenido.avatar) {
+                    radButton.checked = true;
+                }
+
+            }
+
+            document.getElementById("terminos").checked = true
+        }
+    }, [])
+
     return (
         <>
             <div className="container-fluid mt-5">
                 <div className="card">
                     <div className="card-header">
-                        <h5 className="card-title">Registro del participante</h5>
+                        <div className="row">
+                            <div className="col">
+                                <h5 className="card-title">{nuevo ? "Registro del participante" : "Actualizar participante"}</h5>
+                            </div>
+                            <div className=' col d-flex  justify-content-end'>
+                            {
+                                nuevo ?
+                                    (
+                                        <>
+                                            <button onClick={() => registrar()} className="btn btn-primary">
+                                                {nuevo ? "Registrarse" : "Guardar"}
+                                            </button>
+                                        </>
+                                    )
+                                    :
+                                    (
+                                        <>
+                                            <button onClick={ () => actualizar() } className='btn btn-success me-2'>Guardar</button>
+                                            <button onClick={ () => cancelarActualizacion() } className='btn btn-danger'>Cancelar</button>
+                                            
+                                        </>
+                                    )
+                            }
+                            </div>
+                        </div>
                     </div>
                     <div className="card-body">
                         {/** Datos del participante */}
@@ -190,11 +265,6 @@ const Formulario = () => {
                             <label className="form-check-label" htmlFor="terminos">
                                 Aceptar Terminos y Condiciones
                             </label>
-                        </div>
-
-
-                        <div className="mt-3 d-grid">
-                            <button onClick={() => registrar()} className="btn btn-outline-primary btn-lg">Registrarse</button>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { GET_PARTICIPANTES, GET_PARTICIPANTE, ADD_PARTICIPANTE, MODIFY_PARTICIPANTE, DELETE_PARTICIPANTE } from "./types";
+import { GET_PARTICIPANTES, GET_PARTICIPANTE, CLEAN_PARTICIPANTE, ADD_PARTICIPANTE, MODIFY_PARTICIPANTE, DELETE_PARTICIPANTE } from "./types";
 
 export const ParticipanteReducer = ( state, action ) => {
 
@@ -35,6 +35,12 @@ export const ParticipanteReducer = ( state, action ) => {
             return {
                 ...state,
                 participanteEliminado: payload
+            }
+        
+        case CLEAN_PARTICIPANTE:
+            return {
+                ...state,
+                participanteObtenido: payload
             }
     
         default:

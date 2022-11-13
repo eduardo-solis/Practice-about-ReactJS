@@ -12,7 +12,7 @@ const ListaParticipantes = () => {
 
     useEffect(() => {
         obtenerParticipantes();
-    }, [])
+    }, [participantes])
 
     return (
         <div className="container-fluid">
