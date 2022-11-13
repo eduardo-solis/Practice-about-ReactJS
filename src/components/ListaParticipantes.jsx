@@ -3,9 +3,9 @@ import TarjetaParticipantes from "./TarjetaParticipantes"
 const ListaParticipantes = () => {
     return (
         <div className="container-fluid">
-            <div className="card mt-3">
+            <div className="card border-primary mt-3">
                 <div className="card-header">Lista de Participantes</div>
-                <div className="card-body">
+                <div className="card-body overflow-scroll" style={{height: 500}}>
                     <div className="row">
                         {/** Usar esta forma de imprimir las tarjetas */}
                         <div className="col-4 mb-3">
